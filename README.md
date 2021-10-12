@@ -1,7 +1,12 @@
 # Client for Cerpus Edlib Common API
 
-See the Edlib API Documentation for steps on obtaining application id and token.  
-https://docs.edlib.com/docs/developers/api-documentation/application-api/authentication
+
+## Authenticaton
+
+See the [Edlib API Documentation](https://docs.edlib.com/docs/developers/api-documentation/application-api/authentication)
+for steps on obtaining application id and token.
+Set the credentials either by using the `setCredentials` method, or by creating an instance of `EdlibApiClient` and providing them in the config.
+Which headers to set are described in the documentation in the [Make authenticated requests](https://docs.edlib.com/docs/developers/api-documentation/application-api/authentication#make-authenticated-requests) section.
 
 ## Available endpoints
 
@@ -11,8 +16,6 @@ https://docs.edlib.com/docs/developers/api-documentation/application-api/collabo
 ```
 Parameters:
     CollaboratorContext $context
-    string $apiApplicationId
-    string $apiToken
 
 Return:
     GuzzleHttp\Promise\PromiseInterface
@@ -26,8 +29,6 @@ https://docs.edlib.com/docs/developers/api-documentation/application-api/generat
 ```
 Parameters:
     array $body
-    string $apiApplicationId
-    string $apiToken
 
 Return:
     GuzzleHttp\Promise\PromiseInterface

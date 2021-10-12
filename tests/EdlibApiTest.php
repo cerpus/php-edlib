@@ -26,7 +26,7 @@ class EdlibApiTest extends TestCase
 
     /**
      * @covers \Cerpus\Edlib\ApiClient\EdlibApi::__construct
-     * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setAuthentication
+     * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setCredentials
      * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setCollaboratorContext
      * @covers \Cerpus\Edlib\ApiClient\CollaboratorContext::addTenantId
      * @covers \Cerpus\Edlib\ApiClient\CollaboratorContext::isValid
@@ -53,13 +53,13 @@ class EdlibApiTest extends TestCase
             )
             ->willReturn(Create::promiseFor(new Response(200, [], '{}')));
 
-        $this->service->setAuthentication('clientId', 'theKey');
+        $this->service->setCredentials('clientId', 'theKey');
         $this->service->setCollaboratorContext($context)->wait();
     }
 
     /**
      * @covers \Cerpus\Edlib\ApiClient\EdlibApi::__construct
-     * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setAuthentication
+     * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setCredentials
      * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setCollaboratorContext
      * @covers \Cerpus\Edlib\ApiClient\CollaboratorContext::addResourceId
      * @covers \Cerpus\Edlib\ApiClient\CollaboratorContext::addTenantId
@@ -76,13 +76,13 @@ class EdlibApiTest extends TestCase
             ->method('postAsync');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->service->setAuthentication('theKey', 'clientId');
+        $this->service->setCredentials('theKey', 'clientId');
         $this->service->setCollaboratorContext($context)->wait();
     }
 
     /**
      * @covers \Cerpus\Edlib\ApiClient\EdlibApi::__construct
-     * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setAuthentication
+     * @covers \Cerpus\Edlib\ApiClient\EdlibApi::setCredentials
      * @covers \Cerpus\Edlib\ApiClient\EdlibApi::generateH5pFromQa
      */
     public function testGenerateH5pFromQa()
@@ -156,7 +156,7 @@ class EdlibApiTest extends TestCase
             )
             ->willReturn(Create::promiseFor(new Response(200, [], json_encode($response))));
 
-        $this->service->setAuthentication('clientId', 'theKey');
+        $this->service->setCredentials('clientId', 'theKey');
         $this->service->generateH5pFromQa($request)->wait();
     }
 }

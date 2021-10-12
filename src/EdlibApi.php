@@ -17,13 +17,13 @@ class EdlibApi
     }
 
     /**
-     * Set the authentication id and token
+     * Set the application id and token
      * @see https://docs.edlib.com/docs/developers/api-documentation/application-api/authentication/
      *
      * @param string $apiApplicationId
      * @param string $apiToken
      */
-    public function setAuthentication(string $apiApplicationId, string $apiToken)
+    public function setCredentials(string $apiApplicationId, string $apiToken)
     {
         $this->headers = [
             'headers' => [
