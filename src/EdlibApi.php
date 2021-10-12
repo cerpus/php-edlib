@@ -9,6 +9,7 @@ class EdlibApi
 {
     /** @var EdlibApiClient $client */
     private $client;
+    private $headers = [];
 
     public function __construct(EdlibApiClient $client)
     {
@@ -16,16 +17,31 @@ class EdlibApi
     }
 
     /**
+     * Set the authentication id and token
+     * @see https://docs.edlib.com/docs/developers/api-documentation/application-api/authentication/
+     *
+     * @param string $apiApplicationId
+     * @param string $apiToken
+     */
+    public function setAuthentication(string $apiApplicationId, string $apiToken)
+    {
+        $this->headers = [
+            'headers' => [
+                'x-api-key' => $apiToken,
+                'x-api-client-id' => $apiApplicationId,
+            ],
+        ];
+    }
+
+    /**
      * Set or update collaborator context
      * @see https://docs.edlib.com/docs/developers/api-documentation/application-api/collaborator-contexts/
      *
      * @param CollaboratorContext $context
-     * @param string $apiToken
-     * @param string $apiApplicationId
      * @return PromiseInterface
      * @throws InvalidArgumentException
      */
-    public function setCollaboratorContext(CollaboratorContext $context, string $apiApplicationId, string $apiToken): PromiseInterface
+    public function setCollaboratorContext(CollaboratorContext $context): PromiseInterface
     {
         if (!$context->isValid()) {
             throw new InvalidArgumentException('CollaboratorContext is not valid');
@@ -33,13 +49,7 @@ class EdlibApi
 
         return $this->client->postAsync(
             '/common/app/context-resource-collaborators',
-            [
-                'json' => $context,
-                'headers' => [
-                    'x-api-key' => $apiToken,
-                    'x-api-client-id' => $apiApplicationId,
-                ],
-            ]
+            array_merge(['json' => $context], $this->headers)
         );
     }
 
@@ -48,21 +58,13 @@ class EdlibApi
      * @see https://docs.edlib.com/docs/developers/api-documentation/application-api/generate-h5p-from-qa
      * 
      * @param array $body
-     * @param string $apiToken
-     * @param string $apiApplicationId
      * @return PromiseInterface
      */
-    public function generateH5pFromQa(array $body, string $apiApplicationId, string $apiToken): PromiseInterface
+    public function generateH5pFromQa(array $body): PromiseInterface
     {
         return $this->client->postAsync(
             '/common/app/h5p/generate-from-qa',
-            [
-                'json' => $body,
-                'headers' => [
-                    'x-api-key' => $apiToken,
-                    'x-api-client-id' => $apiApplicationId,
-                ],
-            ]
+            array_merge(['json' => $body], $this->headers)
         );
     }
 }
