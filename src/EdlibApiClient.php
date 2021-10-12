@@ -12,7 +12,7 @@ class EdlibApiClient extends Client
         parent::__construct(
             array_replace(
                 [
-                    'base_uri' => 'https://api.test.edlib.cerpusdev.net/',
+                    'base_uri' => 'https://api.edlib.com/',
                 ],
                 $config
             )
