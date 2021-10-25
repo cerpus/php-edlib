@@ -19,7 +19,7 @@ class EdlibApiClient extends Client
         );
     }
 
-    public function postAsync(string $uri, array $options = []): PromiseInterface
+    public function postAsync($uri, array $options = []): PromiseInterface
     {
         return parent::postAsync($uri, $options);
     }
