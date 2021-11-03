@@ -9,22 +9,10 @@ class CollaboratorContext implements \JsonSerializable
 {
     use DtoTrait;
 
-    /**
-     * @var string
-     */
-    private $context;
-    /**
-     * @var array
-     */
-    private $resourceIds = [];
-    /**
-     * @var array
-     */
-    private $tenantIds = [];
-    /**
-     * @var array
-     */
-    private $externalResources;
+    private string $context = '';
+    private array $resourceIds = [];
+    private array $tenantIds = [];
+    private ?array $externalResources = null;
 
     /**
      * Context name
@@ -51,7 +39,7 @@ class CollaboratorContext implements \JsonSerializable
     public function setResourceIds(array $resourceIds): self
     {
         $self = clone $this;
-        $self->resourceIds = $resourceIds;
+        $self->resourceIds = array_unique($resourceIds, SORT_REGULAR);
 
         return $self;
     }
@@ -62,13 +50,16 @@ class CollaboratorContext implements \JsonSerializable
     public function addResourceId(string $resourceId): self
     {
         $self = clone $this;
-        $self->resourceIds[] = $resourceId;
+        if (!in_array($resourceId, $self->resourceIds)) {
+            $self->resourceIds[] = $resourceId;
+        }
 
         return $self;
     }
 
     /**
      * Get the list of resource ids
+     * @return string[]
      */
     public function getResourceIds(): array
     {
@@ -81,7 +72,7 @@ class CollaboratorContext implements \JsonSerializable
     public function setTenantIds(array $tenantIds): self
     {
         $self = clone $this;
-        $self->tenantIds = $tenantIds;
+        $self->tenantIds = array_unique($tenantIds, SORT_REGULAR);
 
         return $self;
     }
@@ -92,13 +83,16 @@ class CollaboratorContext implements \JsonSerializable
     public function addTenantId(string $tenantId): self
     {
         $self = clone $this;
-        $self->tenantIds[] = $tenantId;
+        if (!in_array($tenantId, $self->tenantIds)) {
+            $self->tenantIds[] = $tenantId;
+        }
 
         return $self;
     }
 
     /**
      * Get the list of tenant ids
+     * @return string[]
      */
     public function getTenantIds(): array
     {
@@ -111,7 +105,7 @@ class CollaboratorContext implements \JsonSerializable
     public function setExternalResources(array $externalResources): self
     {
         $self = clone $this;
-        $self->externalResources = $externalResources;
+        $self->externalResources = array_unique($externalResources, SORT_REGULAR);
 
         return $self;
     }
@@ -122,16 +116,20 @@ class CollaboratorContext implements \JsonSerializable
     public function addExternalResource(string $systemName, string $resourceId): self
     {
         $self = clone $this;
-        $self->externalResources[] = [
+        $newResource = [
             'systemName' => $systemName,
             'resourceId' => $resourceId,
         ];
+        if (!is_array($self->externalResources) || !in_array($newResource, $self->externalResources, SORT_REGULAR)) {
+            $self->externalResources[] = $newResource;
+        }
 
         return $self;
     }
 
     /**
      * Get the list of external resources
+     * @return array[]
      */
     public function getExternalResources(): array
     {
