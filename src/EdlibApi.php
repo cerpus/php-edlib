@@ -53,10 +53,18 @@ class EdlibApi
         );
     }
 
+    public function gdprDeleteUser(GdprDeleteUser $gdprDeleteUser): PromiseInterface
+    {
+        return $this->client->deleteAsync(
+            '/common/app/gpdr',
+            array_merge(['json' => $gdprDeleteUser], $this->headers)
+        );
+    }
+
     /**
      * Generate H5P from QA
      * @see https://docs.edlib.com/docs/developers/api-documentation/application-api/generate-h5p-from-qa
-     * 
+     *
      * @param array $body
      * @return PromiseInterface
      */
