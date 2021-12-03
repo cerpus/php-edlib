@@ -1,0 +1,28 @@
+name: "Test"
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2.1.6
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: Run composer install
+        run: composer install -n --prefer-dist
+        env:
+          APP_ENV: testing
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit
+        env:
+          APP_ENV: testing
