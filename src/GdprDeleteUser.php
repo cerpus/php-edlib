@@ -12,7 +12,6 @@ class GdprDeleteUser
 
     public function __construct(string $requestId, string $userId, array $emails = [])
     {
-
         $this->requestId = $requestId;
         $this->userId = $userId;
         $this->emails = $emails;
