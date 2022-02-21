@@ -4,7 +4,7 @@ namespace Cerpus\Edlib\ApiClient;
 
 use InvalidArgumentException;
 
-class ContentAuthorQuestionAndAnswers
+class ContentAuthorQuestionAndAnswers implements \JsonSerializable
 {
     use DtoTrait;
 
