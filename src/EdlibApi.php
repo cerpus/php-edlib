@@ -75,4 +75,12 @@ class EdlibApi
             array_merge(['json' => $body], $this->headers)
         );
     }
+
+    public function getContentAuthorQuestionAndAnswers(ContentAuthorQuestionAndAnswers $body): PromiseInterface
+    {
+        return $this->client->postAsync(
+            '/common/app/contentauthor/question-and-answers',
+            array_merge(['json' => $body], $this->headers)
+        );
+    }
 }
